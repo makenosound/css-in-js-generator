@@ -20,6 +20,7 @@ export function convertCssForEmotion(css: string): string {
 
     const knownScopes = new Set([...cssIndexedByScope.keys()]);
 
+
     const collator = new Intl.Collator(undefined, {
         numeric: true,
         sensitivity: "base",

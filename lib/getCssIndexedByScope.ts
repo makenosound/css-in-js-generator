@@ -44,7 +44,7 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
             if (counter === 0) {
                 cssIndexedByScope.set(scope, cssIndexedByScope.get(scope) + output);
             }
-            counter += 1
+            counter += 1;
         });
 
         if (flag === "end") {
@@ -54,7 +54,7 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
 
     (new Stringifier(builder) as postcss.Stringifier).stringify(
         postcss.parse(css),
-    );)
+    );
 
     return cssIndexedByScope;
 }
