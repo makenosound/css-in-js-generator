@@ -11,7 +11,9 @@ export function getNodeScopes(node: postcss.Node): Set<string> {
             /keyframes/.test(node.parent.name) === false)
     ) {
         (node.selectors || []).forEach((selector) => {
-            nodeScopes.add(getSelectorScope(selector));
+            getSelectorScope(selector).forEach(
+                (result) => nodeScopes.add(result),
+            );
         });
     } else if (
         node.type === "atrule" &&
@@ -19,7 +21,9 @@ export function getNodeScopes(node: postcss.Node): Set<string> {
     ) {
         node.walkRules((rule) => {
             (rule.selectors || []).forEach((selector) => {
-                nodeScopes.add(getSelectorScope(selector));
+                getSelectorScope(selector).forEach(
+                    (result) => nodeScopes.add(result),
+                );
             });
         });
     }
