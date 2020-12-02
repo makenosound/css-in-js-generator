@@ -22,6 +22,7 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
             output += "\n\n";
         }
 
+        let counter = 0;
         scopesStack[scopesStack.length - 1].forEach((scope) => {
             if (cssIndexedByScope.has(scope) === false) {
                 cssIndexedByScope.set(scope, "");
@@ -36,11 +37,14 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
             ) {
                 output = `${(node.selectors || [])
                     .filter(
-                        (selector) => getSelectorScope(selector) === scope,
+                        (selector) => getSelectorScope(selector)[0] === scope,
                     )} {`;
             }
 
-            cssIndexedByScope.set(scope, cssIndexedByScope.get(scope) + output);
+            if (counter === 0) {
+                cssIndexedByScope.set(scope, cssIndexedByScope.get(scope) + output);
+            }
+            counter += 1
         });
 
         if (flag === "end") {
@@ -50,7 +54,7 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
 
     (new Stringifier(builder) as postcss.Stringifier).stringify(
         postcss.parse(css),
-    );
+    );)
 
     return cssIndexedByScope;
 }
