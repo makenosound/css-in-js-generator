@@ -54,7 +54,7 @@ export function convertCssForLinaria(css: string): Scope[] {
             knownScopes,
         );
 
-        const scopeName = scope === "global" ? "root" : convertScopeToModuleName(scope);
+        const scopeName = scope === "root" ? "global" : convertScopeToModuleName(scope);
 
         if (convertedScopedCssForLinaria.trim() !== "") {
             if (scope === "root") {
