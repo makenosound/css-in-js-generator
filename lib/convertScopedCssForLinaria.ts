@@ -8,8 +8,9 @@ export function convertScopedCssForLinaria(
     scopedCss: string,
     scope: string,
     knownScopes: Set<string>,
-): string {
+): [string, Set<string>] {
     let scopedCssForLinaria = "";
+    const matchedScopes = new Set<string>();
 
     function builder(
         output: string,
@@ -32,12 +33,17 @@ export function convertScopedCssForLinaria(
                     const convertedSelectors: Set<string> = new Set();
 
                     (node.selectors || []).forEach((selector) => {
-                        convertedSelectors.add(
-                            convertSelectorForLinaria(
-                                selector,
-                                scope,
-                                knownScopes,
-                            ),
+                        const [
+                            convertedSelector,
+                            convertedScopes,
+                        ] = convertSelectorForLinaria(
+                            selector,
+                            scope,
+                            knownScopes,
+                        );
+                        convertedSelectors.add(convertedSelector);
+                        convertedScopes.forEach((scope) =>
+                            matchedScopes.add(scope),
                         );
                     });
 
@@ -54,5 +60,5 @@ export function convertScopedCssForLinaria(
         postcss.parse(scopedCss),
     );
 
-    return escapeScopedCss(scopedCssForLinaria);
+    return [escapeScopedCss(scopedCssForLinaria), matchedScopes];
 }

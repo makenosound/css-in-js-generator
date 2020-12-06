@@ -9,12 +9,15 @@ const convertedCssScopes = convertCssForLinaria(
     readFileSync("/dev/stdin").toString(),
 );
 
-convertedCssScopes.forEach(([name, css]) => {
-    const content = `
-    import { css } from "@linaria/core"
+convertedCssScopes.forEach(([name, convertedScopes, css]) => {
+    let content = `import { css } from "@linaria/core"`;
 
-    export const ${name} = css\`${css}\`\n
-    `;
+    convertedScopes.forEach((scope) => {
+        content += `\nimport { ${scope} } from "./${scope}"`;
+    });
+
+    content += `\n\nexport const ${name} = css\`${css}\`\n`;
+
     // Write the output file
     writeFileSync(
         `./output/traits/${name}.ts`,

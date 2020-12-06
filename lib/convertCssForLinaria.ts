@@ -5,6 +5,7 @@ import { getRequiredScopes } from "./getRequiredScopes";
 
 type Scope = [
     name: string,
+    convertedScopes: Set<string>
     output: string
 ];
 
@@ -47,7 +48,7 @@ export function convertCssForLinaria(css: string): Scope[] {
 
     sortedKnownScopes.forEach((scope) => {
         let outputCSS = "";
-        const convertedScopedCssForLinaria = convertScopedCssForLinaria(
+        const [convertedScopedCssForLinaria, convertedScopes] = convertScopedCssForLinaria(
             cssIndexedByScope.get(scope) as string,
             scope,
             knownScopes,
@@ -64,6 +65,7 @@ export function convertCssForLinaria(css: string): Scope[] {
 
             outputScopes.push([
                 scopeName,
+                convertedScopes,
                 outputCSS,
             ]);
         }
