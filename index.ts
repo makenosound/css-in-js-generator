@@ -1,23 +1,30 @@
 // tslint:disable no-console
 
-import { readFileSync } from "fs";
+import { appendFileSync, readFileSync, writeFileSync } from "fs";
 import { format } from "prettier";
 
-import { convertCssForEmotion } from "./lib/convertCssForEmotion";
+import { convertCssForLinaria } from "./lib/convertCssForLinaria";
 
-const convertedCss = convertCssForEmotion(
+const convertedCssScopes = convertCssForLinaria(
     readFileSync("/dev/stdin").toString(),
 );
 
-console.log(
-    format(
-        convertedCss.replace(
-            /^injectGlobal/m,
-            "css",
-        ),
-        {
+convertedCssScopes.forEach(([name, css]) => {
+    const content = `
+    import { css } from "@linaria/core"
+
+    export const ${name} = css\`${css}\`\n
+    `;
+    // Write the output file
+    writeFileSync(
+        `./output/traits/${name}.ts`,
+        format(content, {
             parser: "typescript",
-            tabWidth: 4,
-        },
-    ).replace(/^css/m, "injectGlobal"),
-);
+            tabWidth: 2,
+        }),
+    );
+
+    // Append to the index file
+    const index = `export * from "./traits/${name}"\n`;
+    appendFileSync(`./output/index.ts`, index);
+});

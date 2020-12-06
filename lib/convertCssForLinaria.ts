@@ -1,25 +1,18 @@
-import { convertScopedCssForEmotion } from "./convertScopedCssForEmotion";
+import { convertScopedCssForLinaria } from "./convertScopedCssForLinaria";
 import { convertScopeToModuleName } from "./convertScopeToModuleName";
 import { getCssIndexedByScope } from "./getCssIndexedByScope";
 import { getRequiredScopes } from "./getRequiredScopes";
 
-export function convertCssForEmotion(css: string): string {
-    let cssForEmotion = "";
+type Scope = [
+    name: string,
+    output: string
+];
 
+export function convertCssForLinaria(css: string): Scope[] {
+    const outputScopes: Scope[] = [];
     const cssIndexedByScope = getCssIndexedByScope(css);
 
-    if (cssIndexedByScope.has("root")) {
-        if (cssIndexedByScope.size > 1) {
-            cssForEmotion += 'import { css, injectGlobal } from "emotion";\n';
-        } else {
-            cssForEmotion += 'import { injectGlobal } from "emotion";\n';
-        }
-    } else if (cssIndexedByScope.size > 0) {
-        cssForEmotion += 'import { css } from "emotion";\n';
-    }
-
     const knownScopes = new Set([...cssIndexedByScope.keys()]);
-
 
     const collator = new Intl.Collator(undefined, {
         numeric: true,
@@ -53,22 +46,28 @@ export function convertCssForEmotion(css: string): string {
         }, new Set());
 
     sortedKnownScopes.forEach((scope) => {
-        cssForEmotion += "\n";
-
-        const convertedScopedCssForEmotion = convertScopedCssForEmotion(
+        let outputCSS = "";
+        const convertedScopedCssForEmotion = convertScopedCssForLinaria(
             cssIndexedByScope.get(scope) as string,
             scope,
             knownScopes,
         );
 
-        if (scope === "root") {
-            cssForEmotion += `injectGlobal\`${convertedScopedCssForEmotion}\`;\n`;
-        } else {
-            cssForEmotion += `export const ${convertScopeToModuleName(
-                scope,
-            )} = css\`${convertedScopedCssForEmotion}\`;\n`;
+        const scopeName = scope === "global" ? "root" : convertScopeToModuleName(scope);
+
+        if (convertedScopedCssForEmotion.trim() !== "") {
+            if (scope === "root") {
+                outputCSS = `:global() {\n${convertedScopedCssForEmotion}\n}`;
+            } else {
+                outputCSS += convertedScopedCssForEmotion;
+            }
+
+            outputScopes.push([
+                scopeName,
+                outputCSS,
+            ]);
         }
     });
 
-    return cssForEmotion;
+    return outputScopes;
 }

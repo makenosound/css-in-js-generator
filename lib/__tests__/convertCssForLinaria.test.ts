@@ -1,6 +1,6 @@
-import { convertCssForEmotion } from "../convertCssForEmotion";
+import { convertCssForLinaria } from "../convertCssForLinaria";
 
-test("convertCssForEmotion", () => {
+test("convertCssForLinaria", () => {
     const css = `*,
 *::before,
 *::after {
@@ -285,5 +285,5 @@ export const formControl = css\`select&:not([size]):not([multiple]) {
 \`;
 `;
 
-    expect(convertCssForEmotion(css)).toEqual(cssForEmotion);
+    expect(convertCssForLinaria(css)).toEqual(cssForEmotion);
 });

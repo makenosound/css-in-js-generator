@@ -1,6 +1,6 @@
-import { convertSelectorForEmotion } from "../convertSelectorForEmotion";
+import { convertSelectorForLinaria } from "../convertSelectorForLinaria";
 
-test("convertSelectorForEmotion", () => {
+test("convertSelectorForLinaria", () => {
     [
         [
             [
@@ -28,7 +28,7 @@ test("convertSelectorForEmotion", () => {
         ],
     ].forEach(([[selector, scope, knownScopes], convertedSelector]) => {
         expect(
-            convertSelectorForEmotion(
+            convertSelectorForLinaria(
                 selector as string,
                 scope as string,
                 knownScopes as Set<string>,

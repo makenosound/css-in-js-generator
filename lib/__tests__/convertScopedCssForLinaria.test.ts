@@ -1,6 +1,6 @@
-import { convertScopedCssForEmotion } from "../convertScopedCssForEmotion";
+import { convertScopedCssForLinaria } from "../convertScopedCssForLinaria";
 
-test("convertScopedCssForEmotion", () => {
+test("convertScopedCssForLinaria", () => {
     [
         [
             [
@@ -96,7 +96,7 @@ test("convertScopedCssForEmotion", () => {
         ],
     ].forEach(([[scopedCss, scope, scopes], scopedCssForEmotion]) => {
         expect(
-            convertScopedCssForEmotion(
+            convertScopedCssForLinaria(
                 scopedCss as string,
                 scope as string,
                 scopes as Set<string>,

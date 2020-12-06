@@ -1,10 +1,10 @@
 import * as postcss from "postcss";
 import * as Stringifier from "postcss/lib/stringifier";
 
-import { convertSelectorForEmotion } from "./convertSelectorForEmotion";
+import { convertSelectorForLinaria } from "./convertSelectorForLinaria";
 import { escapeScopedCss } from "./escapeScopedCss";
 
-export function convertScopedCssForEmotion(
+export function convertScopedCssForLinaria(
     scopedCss: string,
     scope: string,
     knownScopes: Set<string>,
@@ -33,7 +33,7 @@ export function convertScopedCssForEmotion(
 
                     (node.selectors || []).forEach((selector) => {
                         convertedSelectors.add(
-                            convertSelectorForEmotion(
+                            convertSelectorForLinaria(
                                 selector,
                                 scope,
                                 knownScopes,
