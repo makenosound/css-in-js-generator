@@ -4,9 +4,9 @@ import { getCssIndexedByScope } from "./getCssIndexedByScope";
 import { getRequiredScopes } from "./getRequiredScopes";
 
 type Scope = [
-    name: string,
-    convertedScopes: Set<string>
-    output: string
+    string,
+    Set<string>,
+    string
 ];
 
 export function convertCssForLinaria(css: string): Scope[] {
