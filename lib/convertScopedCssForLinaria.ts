@@ -9,7 +9,7 @@ export function convertScopedCssForLinaria(
     scope: string,
     knownScopes: Set<string>,
 ): string {
-    let scopedCssForEmotion = "";
+    let scopedCssForLinaria = "";
 
     function builder(
         output: string,
@@ -47,12 +47,12 @@ export function convertScopedCssForLinaria(
             }
         }
 
-        scopedCssForEmotion += output;
+        scopedCssForLinaria += output;
     }
 
     (new Stringifier(builder) as postcss.Stringifier).stringify(
         postcss.parse(scopedCss),
     );
 
-    return escapeScopedCss(scopedCssForEmotion);
+    return escapeScopedCss(scopedCssForLinaria);
 }

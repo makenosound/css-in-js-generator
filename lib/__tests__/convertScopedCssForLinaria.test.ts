@@ -94,13 +94,13 @@ test("convertScopedCssForLinaria", () => {
 }
 `,
         ],
-    ].forEach(([[scopedCss, scope, scopes], scopedCssForEmotion]) => {
+    ].forEach(([[scopedCss, scope, scopes], scopedCssForLinaria]) => {
         expect(
             convertScopedCssForLinaria(
                 scopedCss as string,
                 scope as string,
                 scopes as Set<string>,
             ),
-        ).toEqual(scopedCssForEmotion);
+        ).toEqual(scopedCssForLinaria);
     });
 });

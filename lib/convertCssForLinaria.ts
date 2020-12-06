@@ -47,7 +47,7 @@ export function convertCssForLinaria(css: string): Scope[] {
 
     sortedKnownScopes.forEach((scope) => {
         let outputCSS = "";
-        const convertedScopedCssForEmotion = convertScopedCssForLinaria(
+        const convertedScopedCssForLinaria = convertScopedCssForLinaria(
             cssIndexedByScope.get(scope) as string,
             scope,
             knownScopes,
@@ -55,11 +55,11 @@ export function convertCssForLinaria(css: string): Scope[] {
 
         const scopeName = scope === "global" ? "root" : convertScopeToModuleName(scope);
 
-        if (convertedScopedCssForEmotion.trim() !== "") {
+        if (convertedScopedCssForLinaria.trim() !== "") {
             if (scope === "root") {
-                outputCSS = `:global() {\n${convertedScopedCssForEmotion}\n}`;
+                outputCSS = `:global() {\n${convertedScopedCssForLinaria}\n}`;
             } else {
-                outputCSS += convertedScopedCssForEmotion;
+                outputCSS += convertedScopedCssForLinaria;
             }
 
             outputScopes.push([

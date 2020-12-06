@@ -113,7 +113,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 `;
 
-    const cssForEmotion = `import { css, injectGlobal } from "emotion";
+    const cssForLinaria = `import { css } from "@linaria/core";
 
 injectGlobal\`*, *::before, *::after {
     box-sizing: inherit;
@@ -285,5 +285,5 @@ export const formControl = css\`select&:not([size]):not([multiple]) {
 \`;
 `;
 
-    expect(convertCssForLinaria(css)).toEqual(cssForEmotion);
+    expect(convertCssForLinaria(css)).toEqual(cssForLinaria);
 });
