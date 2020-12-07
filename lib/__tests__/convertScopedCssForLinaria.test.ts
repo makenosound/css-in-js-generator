@@ -1,10 +1,9 @@
 import { convertScopedCssForLinaria } from "../convertScopedCssForLinaria";
 
-test("convertScopedCssForLinaria", () => {
+const fixtures: Array<[[string, string, Set<string>], string]> = [
   [
     [
-      [
-        `@media print {
+      `@media print {
     .badge {
         border: 1px solid #000;
     }
@@ -28,12 +27,11 @@ test("convertScopedCssForLinaria", () => {
 
 .badge::before {
     content: "\\2014 \\00A0";
-}
-`,
-        ".badge",
-        new Set(["root", ".badge"]),
-      ],
-      `@media print {
+}`,
+      ".badge",
+      new Set<string>(["root", ".badge"]),
+    ],
+    `@media print {
     & {
         border: 1px solid #000;
     }
@@ -57,12 +55,11 @@ test("convertScopedCssForLinaria", () => {
 
 &::before {
     content: "\\\\2014 \\\\00A0";
-}
-`,
-    ],
+}`,
+  ],
+  [
     [
-      [
-        `.alert-primary {
+      `.alert-primary {
     color: #004085;
     background-color: #cce5ff;
     border-color: #b8daff;
@@ -76,10 +73,10 @@ test("convertScopedCssForLinaria", () => {
     color: #002752;
 }
 `,
-        ".alert-primary",
-        new Set(["root", ".alert-primary", ".alert-link"]),
-      ],
-      `
+      ".alert-primary",
+      new Set<string>(["root", ".alert-primary", ".alert-link"]),
+    ],
+    `
     color: #004085;
     background-color: #cce5ff;
     border-color: #b8daff;
@@ -93,14 +90,17 @@ test("convertScopedCssForLinaria", () => {
     color: #002752;
 }
 `,
-    ],
-  ].forEach(([[scopedCss, scope, scopes], scopedCssForLinaria]) => {
-    expect(
-      convertScopedCssForLinaria(
-        scopedCss as string,
-        scope as string,
-        scopes as Set<string>
-      )
-    ).toEqual(scopedCssForLinaria);
+  ],
+];
+
+test("convertScopedCssForLinaria", () => {
+  fixtures.forEach(([[scopedCss, scope, knownScopes], scopedCssForLinaria]) => {
+    const [converted, matchedScopes] = convertScopedCssForLinaria(
+      scopedCss,
+      scope,
+      knownScopes
+    );
+
+    expect(converted).toEqual(scopedCssForLinaria);
   });
 });
