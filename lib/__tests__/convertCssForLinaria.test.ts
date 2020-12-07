@@ -112,13 +112,28 @@ select.form-control:not([size]):not([multiple]) {
   color: #868e96;
   opacity: 1;
 }
+
+.group:hover .group-inner {
+  content: "group-hover-group-inner";
+}
+.group .group-inner {
+  content: "group-group-inner";
+}
 `;
 
   const cssForLinaria = [
     [
       "close",
-      new Set(),
-      `
+      new Set(["alertDismissible"]),
+      `.\${alertDismissible} & {
+  position: relative;
+  top: -0.75rem;
+  right: -1.25rem;
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+}
+
+
   float: right;
   font-size: 1.5rem;
   font-weight: bold;
@@ -144,15 +159,6 @@ select.form-control:not([size]):not([multiple]) {
 `,
     ],
     [
-      "alertLink",
-      new Set(),
-      `
-  font-weight: bold;
-
-
-`,
-    ],
-    [
       "alertPrimary",
       new Set(["alertLink"]),
       `
@@ -170,6 +176,19 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 `,
+    ],
+    [
+      "alertLink",
+    new Set(["alertPrimary"]),
+  `
+  font-weight: bold;
+
+
+.\${alertPrimary} & {
+  color: #002752;
+}
+
+`
     ],
     [
       "badge",
@@ -201,9 +220,9 @@ select.form-control:not([size]):not([multiple]) {
 `,
     ],
     [
-          "badgeDanger",
-          new Set(),
-          `
+      "badgeDanger",
+      new Set(),
+      `
   color: #fff;
   background-color: #dc3545;
 
@@ -215,11 +234,11 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 `,
-  ],
-  [
-    "blockquoteFooter",
-    new Set(),
-    `
+    ],
+    [
+      "blockquoteFooter",
+      new Set(),
+      `
   display: block;
   font-size: 80%;
   color: #868e96;
@@ -230,29 +249,29 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 `,
-        ],
-        [
-          "display1",
-          new Set(),
-          `
+    ],
+    [
+      "display1",
+      new Set(),
+      `
   font-size: 6rem;
   font-weight: 300;
   line-height: 1.1;
 
 
 `,
-        ],
-        [
-          "display2",
-          new Set(),
-          `
+    ],
+    [
+      "display2",
+      new Set(),
+      `
   font-size: 5.5rem;
   font-weight: 300;
   line-height: 1.1;
 
 
 `,
-        ],
+    ],
     [
       "formControl",
       new Set(),
@@ -266,6 +285,88 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 `,
+    ],
+    [
+      "groupInner",
+      new Set(["group"]),
+      `.\${group}:hover & {
+  content: \"group-hover-group-inner\";
+}
+
+.\${group} & {
+  content: \"group-group-inner\";
+}
+
+`,
+    ],
+    [
+      "group",
+      new Set(["groupInner"]),
+      `&:hover .\${groupInner} {
+  content: \"group-hover-group-inner\";
+}
+
+& .\${groupInner} {
+  content: \"group-group-inner\";
+}
+
+`,
+    ],
+    [
+      "global",
+      new Set(),
+      `:global() {
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+
+
+@-ms-viewport {
+  width: device-width;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}`,
     ],
   ];
 

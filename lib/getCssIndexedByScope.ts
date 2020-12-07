@@ -37,8 +37,9 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
       output += "\n\n";
     }
 
-    let counter = 0;
-    let firstNonRootIndex = [...scopesStack[scopesStack.length - 1]].findIndex(s => s !== "root")
+    // TODO still need to handle removing `.group` or `.group-inner`
+    // let counter = 0;
+    // let firstNonRootIndex = [...scopesStack[scopesStack.length - 1]].findIndex(s => s !== "root")
     scopesStack[scopesStack.length - 1].forEach((scope) => {
       if (cssIndexedByScope.has(scope) === false) {
         cssIndexedByScope.set(scope, "");
@@ -52,14 +53,14 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
           /keyframes$/.test(node.parent.name) === false)
       ) {
         output = `${(node.selectors || []).filter(
-          (selector) => getSelectorScope(selector)[0] === scope
+          (selector) => getSelectorScope(selector).includes(scope)
         )} {`;
       }
 
-      if (counter <= firstNonRootIndex) {
+      // if (counter <= firstNonRootIndex) {
         cssIndexedByScope.set(scope, cssIndexedByScope.get(scope) + output);
-      }
-      counter += 1;
+      // }
+      // counter += 1;
     });
 
     if (flag === "end") {

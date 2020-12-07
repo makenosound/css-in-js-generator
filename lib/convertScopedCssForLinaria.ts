@@ -7,7 +7,7 @@ import { escapeScopedCss } from "./escapeScopedCss";
 export function convertScopedCssForLinaria(
   scopedCss: string,
   scope: string,
-  knownScopes: Set<string>
+  knownScopes: Set<string>,
 ): [string, Set<string>] {
   let scopedCssForLinaria = "";
   const matchedScopes = new Set<string>();
@@ -15,7 +15,7 @@ export function convertScopedCssForLinaria(
   function builder(
     output: string,
     node?: postcss.Node,
-    flag?: "start" | "end"
+    flag?: "start" | "end",
   ) {
     if ((flag === "start" || flag === "end") && node && node.type === "rule") {
       if (node.selector === scope) {
@@ -36,9 +36,10 @@ export function convertScopedCssForLinaria(
             convertedSelectors.add(convertedSelector);
             convertedScopes.forEach((scope) => matchedScopes.add(scope));
           });
-
           // TODO remove join usage once https://github.com/prettier/prettier/issues/2883 is resolved
-          output = `${[...convertedSelectors].join(", ")} {`;
+          output = `${[...convertedSelectors]
+            .filter((s) => s != null && s != "")
+            .join(", ")} {`;
         }
       }
     }
@@ -47,7 +48,7 @@ export function convertScopedCssForLinaria(
   }
 
   (new Stringifier(builder) as postcss.Stringifier).stringify(
-    postcss.parse(scopedCss)
+    postcss.parse(scopedCss),
   );
 
   return [escapeScopedCss(scopedCssForLinaria), matchedScopes];

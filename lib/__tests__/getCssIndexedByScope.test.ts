@@ -30,6 +30,21 @@ test("getCssIndexedByScope", () => {
         content: "nested";
     }
 
+    p {
+      content: "p";
+    }
+
+    .group {
+      content: "group";
+    }
+
+    .group:hover .group-inner {
+      content: "group-hover-group-inner";
+    }
+    .group .group-inner {
+      content: "group-group-inner";
+    }
+
     pre {
         display: block;
         margin-top: 0;
@@ -75,8 +90,6 @@ test("getCssIndexedByScope", () => {
     cssIndexedByScope.set(scope, css.replace(/^\s+$/gm, ""));
   });
 
-  console.log(cssIndexedByScope.get("root"));
-
   expect(cssIndexedByScope).toEqual(
     new Map([
       [
@@ -99,7 +112,10 @@ test("getCssIndexedByScope", () => {
       ],
       [
         ".nestedClass",
-        ""
+        `.parentClass .nestedClass {
+        content: \"nested\";
+    }
+`
       ],
       [
         ".parentClass",
@@ -122,56 +138,86 @@ test("getCssIndexedByScope", () => {
         .container {
             max-width: 540px;
         }
+
     }
 `,
-      ], [
+      ],
+      [
+        ".group",
+        `.group {
+      content: \"group\";
+    }
+
+.group:hover .group-inner {
+      content: \"group-hover-group-inner\";
+    }
+
+.group .group-inner {
+      content: \"group-group-inner\";
+    }
+`
+      ],
+      [".group-inner", `.group:hover .group-inner {
+      content: \"group-hover-group-inner\";
+    }
+
+.group .group-inner {
+      content: \"group-group-inner\";
+    }
+`],
+      [
         "root",
-        `@media print {
-    *,*::before,*::after {
-        text-shadow: none !important;
-        box-shadow: none !important;
+        `/*! Copyright 2017 Acme, Inc. */
+    @media print {
+        *,*::before,*::after {
+            text-shadow: none !important;
+            box-shadow: none !important;
+        }
+
+        pre {
+            white-space: pre-wrap !important;
+        }
+
+    }
+
+    @-ms-viewport {
+        width: device-width;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+      content: \"p\";
     }
 
     pre {
-        white-space: pre-wrap !important;
+        display: block;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 90%;
+        color: #212529;
     }
 
-}
+    @keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
+        0%,
+        68.2% {
+            -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+        }
 
-@-ms-viewport {
-    width: device-width;
-}
+        68.2% {
+            -webkit-animation-timing-function: cubic-bezier(0, 0, 0, 1);
+            animation-timing-function: cubic-bezier(0, 0, 0, 1);
+        }
 
-h1 {
-    font-size: 2.5rem;
-}
+        100% {
+            -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+        }
 
-pre {
-    display: block;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 90%;
-    color: #212529;
-}
-
-@keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
-    0%,
-    68.2% {
-        -webkit-transform: scaleX(0);
-        transform: scaleX(0);
     }
-
-    68.2% {
-        -webkit-animation-timing-function: cubic-bezier(0, 0, 0, 1);
-        animation-timing-function: cubic-bezier(0, 0, 0, 1);
-    }
-
-    100% {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
-    }
-
-}
 `,
       ]
     ]),
