@@ -1,7 +1,7 @@
 import { getCssIndexedByScope } from "../getCssIndexedByScope";
 
 test("getCssIndexedByScope", () => {
-    const cssIndexedByScope = getCssIndexedByScope(`/*! Copyright 2017 Acme, Inc. */
+  const cssIndexedByScope = getCssIndexedByScope(`/*! Copyright 2017 Acme, Inc. */
 @media print {
     *,
     *::before,
@@ -65,15 +65,15 @@ pre {
 }
 `);
 
-    cssIndexedByScope.forEach((css, scope) => {
-        cssIndexedByScope.set(scope, css.replace(/^\s+$/gm, ""));
-    });
+  cssIndexedByScope.forEach((css, scope) => {
+    cssIndexedByScope.set(scope, css.replace(/^\s+$/gm, ""));
+  });
 
-    expect(cssIndexedByScope).toEqual(
-        new Map([
-            [
-                "root",
-                `/*! Copyright 2017 Acme, Inc. */
+  expect(cssIndexedByScope).toEqual(
+    new Map([
+      [
+        "root",
+        `/*! Copyright 2017 Acme, Inc. */
 @media print {
     *,*::before,*::after {
         text-shadow: none !important;
@@ -121,10 +121,10 @@ pre {
 
 }
 `,
-            ],
-            [
-                ".navbar",
-                `@media print {
+      ],
+      [
+        ".navbar",
+        `@media print {
 
     .navbar {
         display: none;
@@ -132,17 +132,17 @@ pre {
 
 }
 `,
-            ],
-            [
-                ".h1",
-                `.h1 {
+      ],
+      [
+        ".h1",
+        `.h1 {
     font-size: 2.5rem;
 }
 `,
-            ],
-            [
-                ".container",
-                `.container {
+      ],
+      [
+        ".container",
+        `.container {
     margin-right: auto;
     margin-left: auto;
     padding-right: 15px;
@@ -157,7 +157,7 @@ pre {
 
 }
 `,
-            ],
-        ]),
-    );
+      ],
+    ])
+  );
 });

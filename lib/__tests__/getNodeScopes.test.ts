@@ -3,9 +3,9 @@ import * as postcss from "postcss";
 import { getNodeScopes } from "../getNodeScopes";
 
 test("getNodeScopes", () => {
+  [
     [
-        [
-            postcss.parse(`
+      postcss.parse(`
                 @media print {
                     *,
                     *::before,
@@ -23,10 +23,10 @@ test("getNodeScopes", () => {
                     }
                 }
             `).first,
-            new Set(["root", ".navbar"]),
-        ],
-        [
-            postcss.parse(`
+      new Set(["root", ".navbar"]),
+    ],
+    [
+      postcss.parse(`
                 @keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
                     0%,
                     68.2% {
@@ -50,10 +50,10 @@ test("getNodeScopes", () => {
                     }
                 }
             `).first,
-            new Set(["root"]),
-        ],
-        [
-            postcss.parse(`
+      new Set(["root"]),
+    ],
+    [
+      postcss.parse(`
                 @-webkit-keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
                     0%,
                     68.2% {
@@ -77,10 +77,10 @@ test("getNodeScopes", () => {
                     }
                 }
             `).first,
-            new Set(["root"]),
-        ],
-        [
-            postcss.parse(`
+      new Set(["root"]),
+    ],
+    [
+      postcss.parse(`
                 @-webkit-keyframes progress-bar-stripes {
                     from {
                         background-position: 1rem 0;
@@ -91,18 +91,18 @@ test("getNodeScopes", () => {
                     }
                 }
             `).first,
-            new Set(["root"]),
-        ],
-        [
-            postcss.parse(`
+      new Set(["root"]),
+    ],
+    [
+      postcss.parse(`
                 @-ms-viewport {
                     width: device-width;
                 }
             `).first,
-            new Set(["root"]),
-        ],
-        [
-            postcss.parse(`
+      new Set(["root"]),
+    ],
+    [
+      postcss.parse(`
                 .container {
                     margin-right: auto;
                     margin-left: auto;
@@ -111,24 +111,24 @@ test("getNodeScopes", () => {
                     width: 100%;
                 }
             `).first,
-            new Set([".container"]),
-        ],
-        [
-            postcss.parse(`
+      new Set([".container"]),
+    ],
+    [
+      postcss.parse(`
                 h1,
                 .h1 {
                     font-size: 2.5rem;
                 }
             `).first,
-            new Set(["root", ".h1"]),
-        ],
-        [
-            postcss.parse(`
+      new Set(["root", ".h1"]),
+    ],
+    [
+      postcss.parse(`
                 /*! Copyright 2017 Acme, Inc. */
             `).first,
-            new Set(["root"]),
-        ],
-    ].forEach(([node, nodeScopes]) => {
-        expect(getNodeScopes(node as postcss.Node)).toEqual(nodeScopes);
-    });
+      new Set(["root"]),
+    ],
+  ].forEach(([node, nodeScopes]) => {
+    expect(getNodeScopes(node as postcss.Node)).toEqual(nodeScopes);
+  });
 });

@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "lib": ["es2020"],
-        "target": "es2019",
-        "module": "commonjs",
-        "noEmit": true,
-        "pretty": true,
-        "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-        "strict": true
-    },
-    "include": ["lib/**/*", "index.ts"]
+  "compilerOptions": {
+    "lib": ["es2020"],
+    "target": "es2019",
+    "module": "commonjs",
+    "noEmit": true,
+    "pretty": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true
+  },
+  "include": ["lib/**/*", "index.ts"]
 }

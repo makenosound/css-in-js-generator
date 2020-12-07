@@ -1,7 +1,7 @@
 import { getRequiredScopes } from "../getRequiredScopes";
 
 test("getRequiredScopes", () => {
-    const css = `
+  const css = `
         .alert-primary {
             color: #004085;
             background-color: #cce5ff;
@@ -16,14 +16,14 @@ test("getRequiredScopes", () => {
             color: #002752;
         }
     `;
-    const scope = ".alert-primary";
-    const knownScopes = new Set([
-        "root",
-        ".alert-link",
-        ".alert-primary",
-        ".badge",
-    ]);
-    const requiredScopes = new Set([".alert-link"]);
+  const scope = ".alert-primary";
+  const knownScopes = new Set([
+    "root",
+    ".alert-link",
+    ".alert-primary",
+    ".badge",
+  ]);
+  const requiredScopes = new Set([".alert-link"]);
 
-    expect(getRequiredScopes(css, scope, knownScopes)).toEqual(requiredScopes);
+  expect(getRequiredScopes(css, scope, knownScopes)).toEqual(requiredScopes);
 });

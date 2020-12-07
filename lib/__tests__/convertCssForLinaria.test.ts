@@ -1,7 +1,7 @@
 import { convertCssForLinaria } from "../convertCssForLinaria";
 
 test("convertCssForLinaria", () => {
-    const css = `*,
+  const css = `*,
 *::before,
 *::after {
     box-sizing: inherit;
@@ -113,7 +113,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 `;
 
-    const cssForLinaria = `import { css } from "@linaria/core";
+  const cssForLinaria = `import { css } from "@linaria/core";
 
 injectGlobal\`*, *::before, *::after {
     box-sizing: inherit;
@@ -285,5 +285,5 @@ export const formControl = css\`select&:not([size]):not([multiple]) {
 \`;
 `;
 
-    expect(convertCssForLinaria(css)).toEqual(cssForLinaria);
+  expect(convertCssForLinaria(css)).toEqual(cssForLinaria);
 });
