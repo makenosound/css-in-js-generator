@@ -1,5 +1,5 @@
 import * as postcss from "postcss";
-const Stringifier = require("postcss/lib/stringifier").default;
+const Stringifier = require("postcss/lib/stringifier");
 
 import { convertSelectorForLinaria } from "./convertSelectorForLinaria";
 import { escapeScopedCss } from "./escapeScopedCss";

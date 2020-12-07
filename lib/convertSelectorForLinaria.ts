@@ -1,4 +1,4 @@
-const parseSelector = require("postcss-selector-parser").default;
+const parseSelector = require("postcss-selector-parser");
 
 import { convertScopeToModuleName } from "./convertScopeToModuleName";
 

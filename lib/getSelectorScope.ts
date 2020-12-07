@@ -1,4 +1,4 @@
-const parseSelector = require("postcss-selector-parser").default;
+const parseSelector = require("postcss-selector-parser");
 
 export function getSelectorScope(selector: string): string[] {
   const selectorScope: string[] = [];

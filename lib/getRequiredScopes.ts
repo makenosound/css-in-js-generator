@@ -1,5 +1,5 @@
 import * as postcss from "postcss";
-const parseSelector = require("postcss-selector-parser").default;
+const parseSelector = require("postcss-selector-parser");
 
 import { getSelectorScope } from "./getSelectorScope";
 
