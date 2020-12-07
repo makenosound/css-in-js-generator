@@ -8,7 +8,7 @@ test("convertSelectorForLinaria", () => {
         ".list-inline-item",
         new Set(["root", ".list-inline-item"]),
       ],
-      "&:not(:last-child)",
+      ["&:not(:last-child)", new Set()],
     ],
     [
       [
@@ -16,7 +16,7 @@ test("convertSelectorForLinaria", () => {
         ".no-gutters",
         new Set(["root", ".no-gutters", ".col"]),
       ],
-      "& > .${col}",
+      ["& > .${col}", new Set(["col"])],
     ],
     [
       [
@@ -24,7 +24,7 @@ test("convertSelectorForLinaria", () => {
         ".alert-primary",
         new Set(["root", ".alert-primary", ".alert-link"]),
       ],
-      "& .${alertLink}",
+      ["& .${alertLink}", new Set(["alertLink"])],
     ],
   ].forEach(([[selector, scope, knownScopes], convertedSelector]) => {
     expect(

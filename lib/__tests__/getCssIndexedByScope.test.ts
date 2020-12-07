@@ -2,79 +2,131 @@ import { getCssIndexedByScope } from "../getCssIndexedByScope";
 
 test("getCssIndexedByScope", () => {
   const cssIndexedByScope = getCssIndexedByScope(`/*! Copyright 2017 Acme, Inc. */
-@media print {
-    *,
-    *::before,
-    *::after {
-        text-shadow: none !important;
-        box-shadow: none !important;
+    @media print {
+        *,
+        *::before,
+        *::after {
+            text-shadow: none !important;
+            box-shadow: none !important;
+        }
+
+        pre {
+            white-space: pre-wrap !important;
+        }
+        .navbar {
+            display: none;
+        }
+    }
+
+    @-ms-viewport {
+        width: device-width;
+    }
+
+    h1, .h1 {
+        font-size: 2.5rem;
+    }
+
+    .parentClass .nestedClass {
+        content: "nested";
     }
 
     pre {
-        white-space: pre-wrap !important;
+        display: block;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 90%;
+        color: #212529;
     }
-    .navbar {
-        display: none;
-    }
-}
 
-@-ms-viewport {
-    width: device-width;
-}
-
-h1, .h1 {
-    font-size: 2.5rem;
-}
-
-pre {
-    display: block;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 90%;
-    color: #212529;
-}
-
-.container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
-    width: 100%;
-} @media (min-width: 576px) {
     .container {
-        max-width: 540px;
-    }
-}
-
-@keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
-    0%,
-    68.2% {
-        -webkit-transform: scaleX(0);
-        transform: scaleX(0);
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: 15px;
+        padding-left: 15px;
+        width: 100%;
     }
 
-    68.2% {
-        -webkit-animation-timing-function: cubic-bezier(0, 0, 0, 1);
-        animation-timing-function: cubic-bezier(0, 0, 0, 1);
+    @media (min-width: 576px) {
+        .container {
+            max-width: 540px;
+        }
     }
 
-    100% {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
+    @keyframes mdc-checkbox-unchecked-indeterminate-mixedmark {
+        0%,
+        68.2% {
+            -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+        }
+
+        68.2% {
+            -webkit-animation-timing-function: cubic-bezier(0, 0, 0, 1);
+            animation-timing-function: cubic-bezier(0, 0, 0, 1);
+        }
+
+        100% {
+            -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+        }
     }
-}
-`);
+  `);
 
   cssIndexedByScope.forEach((css, scope) => {
     cssIndexedByScope.set(scope, css.replace(/^\s+$/gm, ""));
   });
 
+  console.log(cssIndexedByScope.get("root"));
+
   expect(cssIndexedByScope).toEqual(
     new Map([
       [
+        ".navbar",
+        `@media print {
+
+        .navbar {
+            display: none;
+        }
+
+    }
+`,
+      ],
+      [
+        ".h1",
+        `.h1 {
+        font-size: 2.5rem;
+    }
+`,
+      ],
+      [
+        ".nestedClass",
+        ""
+      ],
+      [
+        ".parentClass",
+        `.parentClass .nestedClass {
+        content: \"nested\";
+    }
+`
+      ],
+      [
+        ".container",
+        `.container {
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: 15px;
+        padding-left: 15px;
+        width: 100%;
+    }
+
+@media (min-width: 576px) {
+        .container {
+            max-width: 540px;
+        }
+    }
+`,
+      ], [
         "root",
-        `/*! Copyright 2017 Acme, Inc. */
-@media print {
+        `@media print {
     *,*::before,*::after {
         text-shadow: none !important;
         box-shadow: none !important;
@@ -121,43 +173,7 @@ pre {
 
 }
 `,
-      ],
-      [
-        ".navbar",
-        `@media print {
-
-    .navbar {
-        display: none;
-    }
-
-}
-`,
-      ],
-      [
-        ".h1",
-        `.h1 {
-    font-size: 2.5rem;
-}
-`,
-      ],
-      [
-        ".container",
-        `.container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
-    width: 100%;
-}
-
-@media (min-width: 576px) {
-    .container {
-        max-width: 540px;
-    }
-
-}
-`,
-      ],
-    ])
+      ]
+    ]),
   );
 });
