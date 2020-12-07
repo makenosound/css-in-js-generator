@@ -1,6 +1,6 @@
 import camelCase from "camelcase";
 
-export function convertScopeToModuleName(scope: string) {
+export function convertScopeToModuleName(scope: string): string {
   return camelCase(scope)
     .replace(/^(\d)/, "_$1")
     .replace(

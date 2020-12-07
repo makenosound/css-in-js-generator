@@ -1,19 +1,17 @@
-// tslint:disable no-console
-
 import { appendFileSync, readFileSync, writeFileSync } from "fs";
 import { format } from "prettier";
-
 import { convertCssForLinaria } from "./lib/convertCssForLinaria";
 
 const [inputFile, outputPath] = process.argv.slice(2);
 
 const convertedCssScopes = convertCssForLinaria(
-  readFileSync(inputFile).toString(),
+  readFileSync(inputFile).toString()
 );
 
 convertedCssScopes.forEach(([name, convertedScopes, css]) => {
   let content = `import { css } from "@linaria/core"`;
 
+  // Add import statements for any converted scopes
   convertedScopes.forEach((scope) => {
     content += `\nimport { ${scope} } from "./${scope}"`;
   });

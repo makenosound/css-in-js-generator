@@ -7,6 +7,6 @@ test("convertScopeToModuleName", () => {
     [".border-top-0", "borderTop0"],
     [".navbar-expand-sm", "navbarExpandSm"],
   ].forEach(([scope, moduleName]) => {
-    expect(convertScopeToModuleName(scope as string)).toEqual(moduleName);
+    expect(convertScopeToModuleName(scope)).toEqual(moduleName);
   });
 });
