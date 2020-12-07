@@ -5,10 +5,10 @@ import { format } from "prettier";
 
 import { convertCssForLinaria } from "./lib/convertCssForLinaria";
 
-const [inputFile] = process.argv.slice(2);
+const [inputFile, outputPath] = process.argv.slice(2);
 
 const convertedCssScopes = convertCssForLinaria(
-  readFileSync(inputFile).toString()
+  readFileSync(inputFile).toString(),
 );
 
 convertedCssScopes.forEach(([name, convertedScopes, css]) => {
@@ -22,7 +22,7 @@ convertedCssScopes.forEach(([name, convertedScopes, css]) => {
 
   // Write the output file
   writeFileSync(
-    `./output/traits/${name}.ts`,
+    `${outputPath}/traits/${name}.ts`,
     format(content, {
       parser: "typescript",
       tabWidth: 2,
@@ -31,5 +31,5 @@ convertedCssScopes.forEach(([name, convertedScopes, css]) => {
 
   // Append to the index file
   const index = `export * from "./traits/${name}"\n`;
-  appendFileSync(`./output/index.ts`, index);
+  appendFileSync(`${outputPath}/index.ts`, index);
 });

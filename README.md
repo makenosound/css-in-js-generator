@@ -1,27 +1,18 @@
-# CSS-in-JS-generator
+# Linaria-compatible CSS-in-JS-generator
 
-__CSS-in-JS-generator__ is a tool to generate trendy CSS-in-JS files from regular CSS.
-
-## Install
-
-```sh
-npm install css-in-js-generator
-```
+A tool to generate [Linaria-compatible](https://linaria.dev/) CSS-in-JS files
+from regular CSS.
 
 ## Usage
 
-Here is a demo to convert [Bootstrap](http://getbootstrap.com/) to CSS-in-JS usable by [emotion](https://emotion.sh/).
-
 ```sh
-curl https://unpkg.com/bootstrap@4.0.0-beta/dist/css/bootstrap.css | \
-    node ./node_modules/css-in-js-generator/index.js > \
-    bootstrap.js
+npm run start ./path-to-input.css ./output
 ```
 
-## Demo
+This will create take the CSS from `./path-to-input.css` and create a set of
+converted CSS-in-JS files at `./output`.
 
-A demo using next.js, emotion and bootstrap is available [here](https://css-in-js-experiences.ga/bootstrap/), source code of demo is [here](https://github.com/brikou/CSS-in-JS-experiences).
+## Acknowledgements
 
-## License
-
-MIT
+Based heavily on the original (for Emotion) implementation from [Brice
+Bernard](https://github.com/brikou/CSS-in-JS-generator).

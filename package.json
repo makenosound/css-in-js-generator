@@ -1,8 +1,8 @@
 {
   "name": "css-in-js-generator",
-  "version": "0.3.0",
-  "description": "A tool to generate trendy CSS-in-JS files from regular CSS.",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "A tool to generate Linaria-compatible CSS-in-JS files from regular CSS",
+  "main": "index.ts",
   "scripts": {
     "start": "ts-node ./index.ts",
     "lint": "tsc && prettier --check '**/*'",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brikou/CSS-in-JS-generator.git"
+    "url": "git+https://github.com/makenosound/css-in-js-generator.git"
   },
   "keywords": [
     "css",
@@ -20,12 +20,12 @@
     "js",
     "react"
   ],
-  "author": "Brice BERNARD <brikou@gmail.com>",
+  "author": "Max Wheeler <max@makenosound.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brikou/CSS-in-JS-generator/issues"
+    "url": "https://github.com/makenosound/css-in-js-generator/issues"
   },
-  "homepage": "https://github.com/brikou/CSS-in-JS-generator#readme",
+  "homepage": "https://github.com/makenosound/css-in-js-generator#readme",
   "dependencies": {
     "camelcase": "^6.2.0",
     "postcss": "6.0.13",
