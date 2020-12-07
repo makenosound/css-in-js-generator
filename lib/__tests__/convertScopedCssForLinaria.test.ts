@@ -1,6 +1,8 @@
 import { convertScopedCssForLinaria } from "../convertScopedCssForLinaria";
 
-const fixtures: Array<[[string, string, Set<string>], string]> = [
+const fixtures: Array<
+  [[string, string, Set<string>], [string, Set<string>]]
+> = [
   [
     [
       `@media print {
@@ -31,7 +33,8 @@ const fixtures: Array<[[string, string, Set<string>], string]> = [
       ".badge",
       new Set<string>(["root", ".badge"]),
     ],
-    `@media print {
+    [
+      `@media print {
     & {
         border: 1px solid #000;
     }
@@ -56,6 +59,8 @@ const fixtures: Array<[[string, string, Set<string>], string]> = [
 &::before {
     content: "\\\\2014 \\\\00A0";
 }`,
+      new Set<string>(),
+    ],
   ],
   [
     [
@@ -76,7 +81,8 @@ const fixtures: Array<[[string, string, Set<string>], string]> = [
       ".alert-primary",
       new Set<string>(["root", ".alert-primary", ".alert-link"]),
     ],
-    `
+    [
+      `
     color: #004085;
     background-color: #cce5ff;
     border-color: #b8daff;
@@ -90,17 +96,20 @@ const fixtures: Array<[[string, string, Set<string>], string]> = [
     color: #002752;
 }
 `,
+      new Set<string>(["alertLink"]),
+    ],
   ],
 ];
 
 test("convertScopedCssForLinaria", () => {
-  fixtures.forEach(([[scopedCss, scope, knownScopes], scopedCssForLinaria]) => {
-    const [converted, matchedScopes] = convertScopedCssForLinaria(
+  fixtures.forEach(([[scopedCss, scope, knownScopes], [expectedCSS, expectedMatchedScopes]]) => {
+    const [convertedCSS, matchedScopes] = convertScopedCssForLinaria(
       scopedCss,
       scope,
-      knownScopes
+      knownScopes,
     );
 
-    expect(converted).toEqual(scopedCssForLinaria);
+    expect(convertedCSS).toEqual(expectedCSS);
+    expect(matchedScopes).toEqual(expectedMatchedScopes);
   });
 });
