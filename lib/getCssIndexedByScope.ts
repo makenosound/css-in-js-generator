@@ -38,6 +38,7 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
     }
 
     let counter = 0;
+    let firstNonRootIndex = [...scopesStack[scopesStack.length - 1]].findIndex(s => s !== "root")
     scopesStack[scopesStack.length - 1].forEach((scope) => {
       if (cssIndexedByScope.has(scope) === false) {
         cssIndexedByScope.set(scope, "");
@@ -55,7 +56,7 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
         )} {`;
       }
 
-      if (counter === 0) {
+      if (counter <= firstNonRootIndex) {
         cssIndexedByScope.set(scope, cssIndexedByScope.get(scope) + output);
       }
       counter += 1;
