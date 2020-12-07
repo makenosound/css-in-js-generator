@@ -5,8 +5,10 @@ import { format } from "prettier";
 
 import { convertCssForLinaria } from "./lib/convertCssForLinaria";
 
+const [inputFile] = process.argv.slice(2);
+
 const convertedCssScopes = convertCssForLinaria(
-    readFileSync("/dev/stdin").toString(),
+    readFileSync(inputFile).toString(),
 );
 
 convertedCssScopes.forEach(([name, convertedScopes, css]) => {

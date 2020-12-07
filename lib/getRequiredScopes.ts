@@ -1,5 +1,5 @@
 import * as postcss from "postcss";
-import * as parseSelector from "postcss-selector-parser";
+const parseSelector = require("postcss-selector-parser").default;
 
 import { getSelectorScope } from "./getSelectorScope";
 
@@ -8,20 +8,23 @@ export function getRequiredScopes(
     scope: string,
     knownScopes: Set<string>,
 ): Set<string> {
-    const requiredScopes = new Set();
+    const requiredScopes = new Set<string>();
 
     const root = postcss.parse(css);
     root.walkRules((rule) => {
         parseSelector((nodes: any) => {
             nodes.walkClasses((node: any) => {
-                const selectorScope = getSelectorScope(node.toString());
-                if (selectorScope === scope) {
+                const selectorScopes = getSelectorScope(node.toString());
+                if (selectorScopes.includes(scope)) {
                     return;
                 }
-
-                if (knownScopes.has(selectorScope)) {
-                    requiredScopes.add(selectorScope);
-                }
+                selectorScopes.forEach(
+                    (result) => {
+                        if (knownScopes.has(result)) {
+                            requiredScopes.add(result);
+                        }
+                    }
+                );
             });
         }).processSync(rule.selector);
     });

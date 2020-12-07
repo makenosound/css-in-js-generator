@@ -44,7 +44,7 @@ export function convertCssForLinaria(css: string): Scope[] {
             }
 
             return previousSortedKnownScopes;
-        }, new Set());
+        }, new Set<string>());
 
     sortedKnownScopes.forEach((scope) => {
         let outputCSS = "";
