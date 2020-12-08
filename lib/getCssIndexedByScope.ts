@@ -27,7 +27,7 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
   function builder(
     output: string,
     node?: postcss.Node,
-    flag?: "start" | "end"
+    flag?: "start" | "end",
   ) {
     if (flag === "start" && node) {
       scopesStack.push(getNodeScopes(node));
@@ -37,9 +37,6 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
       output += "\n\n";
     }
 
-    // TODO still need to handle removing `.group` or `.group-inner`
-    // let counter = 0;
-    // let firstNonRootIndex = [...scopesStack[scopesStack.length - 1]].findIndex(s => s !== "root")
     scopesStack[scopesStack.length - 1].forEach((scope) => {
       if (cssIndexedByScope.has(scope) === false) {
         cssIndexedByScope.set(scope, "");
@@ -52,15 +49,12 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
         (node.parent.type !== "atrule" ||
           /keyframes$/.test(node.parent.name) === false)
       ) {
-        output = `${(node.selectors || []).filter(
-          (selector) => getSelectorScope(selector).includes(scope)
+        output = `${(node.selectors || []).filter((selector) =>
+          getSelectorScope(selector).includes(scope),
         )} {`;
       }
 
-      // if (counter <= firstNonRootIndex) {
-        cssIndexedByScope.set(scope, cssIndexedByScope.get(scope) + output);
-      // }
-      // counter += 1;
+      cssIndexedByScope.set(scope, cssIndexedByScope.get(scope) + output);
     });
 
     if (flag === "end") {
@@ -69,8 +63,24 @@ export function getCssIndexedByScope(css: string): Map<string, string> {
   }
 
   (new Stringifier(builder) as postcss.Stringifier).stringify(
-    postcss.parse(css)
+    postcss.parse(css),
   );
+
+  // To ensure that we don’t repeat nested class rules, we need to reparse the
+  // CSS and remove the rules where the _scope_ is the top-level classScope
+  // and there is more than one classScope
+  cssIndexedByScope.forEach((css: string, scope: string) => {
+    const parsed = postcss.parse(css);
+    parsed.walkRules((rule) => {
+      const { selector } = rule;
+      const classScopes = getSelectorScope(selector);
+      if (classScopes.length > 1 && classScopes[0] === scope) {
+        rule.remove()
+      }
+    });
+
+    cssIndexedByScope.set(scope, parsed.toString())
+  });
 
   return cssIndexedByScope;
 }

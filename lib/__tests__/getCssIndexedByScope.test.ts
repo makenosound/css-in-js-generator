@@ -38,11 +38,18 @@ test("getCssIndexedByScope", () => {
       content: "group";
     }
 
+    .group p {
+      content: "group p";
+    }
+
     .group:hover .group-inner {
       content: "group-hover-group-inner";
     }
     .group .group-inner {
       content: "group-group-inner";
+    }
+    .group .group-inner p {
+      content: "group-group-inner p";
     }
 
     pre {
@@ -119,10 +126,7 @@ test("getCssIndexedByScope", () => {
       ],
       [
         ".parentClass",
-        `.parentClass .nestedClass {
-        content: \"nested\";
-    }
-`
+        ``
       ],
       [
         ".container",
@@ -148,12 +152,8 @@ test("getCssIndexedByScope", () => {
       content: \"group\";
     }
 
-.group:hover .group-inner {
-      content: \"group-hover-group-inner\";
-    }
-
-.group .group-inner {
-      content: \"group-group-inner\";
+.group p {
+      content: \"group p\";
     }
 `
       ],
@@ -163,6 +163,10 @@ test("getCssIndexedByScope", () => {
 
 .group .group-inner {
       content: \"group-group-inner\";
+    }
+
+.group .group-inner p {
+      content: \"group-group-inner p\";
     }
 `],
       [
