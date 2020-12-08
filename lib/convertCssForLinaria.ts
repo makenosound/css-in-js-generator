@@ -28,7 +28,7 @@ export function convertCssForLinaria(css: string): Scope[] {
       getRequiredScopes(
         cssIndexedByScope.get(knownScope) as string,
         knownScope,
-        knownScopes
+        knownScopes,
       ).forEach((requiredScope) => {
         if (previousSortedKnownScopes.has(requiredScope) === false) {
           previousSortedKnownScopes.add(requiredScope);
@@ -50,21 +50,19 @@ export function convertCssForLinaria(css: string): Scope[] {
     ] = convertScopedCssForLinaria(
       cssIndexedByScope.get(scope) as string,
       scope,
-      knownScopes
+      knownScopes,
     );
 
     const scopeName =
       scope === "root" ? "global" : convertScopeToModuleName(scope);
 
-    if (convertedScopedCssForLinaria.trim() !== "") {
-      if (scope === "root") {
-        outputCSS = `:global() {\n${convertedScopedCssForLinaria}\n}`;
-      } else {
-        outputCSS += convertedScopedCssForLinaria;
-      }
-
-      outputScopes.push([scopeName, convertedScopes, outputCSS]);
+    if (scope === "root") {
+      outputCSS = `:global() {\n${convertedScopedCssForLinaria}\n}`;
+    } else {
+      outputCSS += convertedScopedCssForLinaria;
     }
+
+    outputScopes.push([scopeName, convertedScopes, outputCSS]);
   });
 
   return outputScopes;
