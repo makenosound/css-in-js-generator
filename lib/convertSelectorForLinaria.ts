@@ -15,7 +15,7 @@ export function convertSelectorForLinaria(
       } else if (knownScopes.has(node.toString())) {
         convertedScopes.add(convertScopeToModuleName(node.value));
         node.toString = () =>
-          ".${" + convertScopeToModuleName(node.value) + "}";
+          "${" + convertScopeToModuleName(node.value) + "}";
       }
     });
   }).processSync(selector);

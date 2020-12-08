@@ -125,7 +125,7 @@ select.form-control:not([size]):not([multiple]) {
     [
       "close",
       new Set(["alertDismissible"]),
-      `.\${alertDismissible} & {
+      `\${alertDismissible} & {
   position: relative;
   top: -0.75rem;
   right: -1.25rem;
@@ -148,7 +148,7 @@ select.form-control:not([size]):not([multiple]) {
     [
       "alertDismissible",
       new Set(["close"]),
-      `& .\${close} {
+      `& \${close} {
   position: relative;
   top: -0.75rem;
   right: -1.25rem;
@@ -171,7 +171,7 @@ select.form-control:not([size]):not([multiple]) {
   border-top-color: #9fcdff;
 }
 
-& .\${alertLink} {
+& \${alertLink} {
   color: #002752;
 }
 
@@ -184,7 +184,7 @@ select.form-control:not([size]):not([multiple]) {
   font-weight: bold;
 
 
-.\${alertPrimary} & {
+\${alertPrimary} & {
   color: #002752;
 }
 
@@ -289,11 +289,11 @@ select.form-control:not([size]):not([multiple]) {
     [
       "groupInner",
       new Set(["group"]),
-      `.\${group}:hover & {
+      `\${group}:hover & {
   content: \"group-hover-group-inner\";
 }
 
-.\${group} & {
+\${group} & {
   content: \"group-group-inner\";
 }
 
@@ -302,11 +302,11 @@ select.form-control:not([size]):not([multiple]) {
     [
       "group",
       new Set(["groupInner"]),
-      `&:hover .\${groupInner} {
+      `&:hover \${groupInner} {
   content: \"group-hover-group-inner\";
 }
 
-& .\${groupInner} {
+& \${groupInner} {
   content: \"group-group-inner\";
 }
 

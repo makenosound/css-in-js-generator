@@ -16,7 +16,7 @@ test("convertSelectorForLinaria", () => {
         ".no-gutters",
         new Set(["root", ".no-gutters", ".col"]),
       ],
-      ["& > .${col}", new Set(["col"])],
+      ["& > ${col}", new Set(["col"])],
     ],
     [
       [
@@ -24,7 +24,7 @@ test("convertSelectorForLinaria", () => {
         ".alert-primary",
         new Set(["root", ".alert-primary", ".alert-link"]),
       ],
-      ["& .${alertLink}", new Set(["alertLink"])],
+      ["& ${alertLink}", new Set(["alertLink"])],
     ],
   ].forEach(([[selector, scope, knownScopes], convertedSelector]) => {
     expect(
